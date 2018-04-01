@@ -154,11 +154,35 @@ const nodes = [
     graph.addNode()
 ];
 
+/**
+ * 1 → 2 → 3 → 4
+ *    ↙      ↗
+ *   8      5
+ *        ↗  ↖
+ *      6      7
+ * 
+ * 10 → 9
+ * 
+ * Expected top sort result:
+ * 
+ * Node 4, 8 and 9 have no dependencies, they are the first to be progressed.
+ * Node 2 cannot be progressed yet, since the node 3 is not progressed yet.
+ * Node 3, 5 and 10 can be progressed right afterwards.
+ * Node 2, 6 and 7 can be pogressed.
+ * Node 1 can be progressed.
+ */
+
 graph.addEdge(nodes[0].getId(), nodes[1].getId());
 graph.addEdge(nodes[1].getId(), nodes[2].getId());
 graph.addEdge(nodes[2].getId(), nodes[3].getId());
 graph.addEdge(nodes[4].getId(), nodes[3].getId());
 graph.addEdge(nodes[5].getId(), nodes[4].getId());
+graph.addEdge(nodes[6].getId(), nodes[4].getId());
+graph.addEdge(nodes[1].getId(), nodes[7].getId());
+
+
+// Subtree 2
+graph.addEdge(nodes[9].getId(), nodes[8].getId());
 
 const topSortResult = topSort(graph);
 
